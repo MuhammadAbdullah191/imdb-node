@@ -5,7 +5,7 @@ const db = require('./src/config/DatabaseConfig')
 
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
-app.set('views', path.join(__dirname, '/src/views'));
+app.set('views', path.join(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs')
 
 
@@ -17,7 +17,7 @@ app.get('/',(req,res)=>{
   res.status(200).render('index')
 })
 
-app.use(express.static("public"))
+app.use("/public", express.static('public'))
 
 app.listen(3000,()=>{
   console.log('server running on port 3000')

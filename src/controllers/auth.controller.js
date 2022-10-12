@@ -53,7 +53,7 @@ exports.signin = (req, res) => {
 				expiresIn: 1000
 			})
 
-			res.status(200).send({
+			res.status(200).render('users/show',{
 				user: {
 					id: user.id,
 					email: user.email,

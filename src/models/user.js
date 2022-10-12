@@ -20,7 +20,7 @@ const userScehma = new mongoose.Schema({
 	role: {
 		type: String,
 		enum:['normal', 'admin'],
-		required: [true, 'Please Specify user role'],
+		default: 'normal'
 	},
 	password:{
 		type: String,
