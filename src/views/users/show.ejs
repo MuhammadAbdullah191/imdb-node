@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+	<%- include('../includes/head', {title: 'Profile'}); -%>
+<body>
+  <h1>
+		This is going to be a movie detail page
+	</h1>
+	<div id="testButton" onclick="checkEvent()">Test Button</div>
+	<%= messgae %>
+	<script>
+    localStorage.setItem('token', "<%= JSON.stringify(accessToken) %>")
+	</script>
+</body>
+</html>
