@@ -5,8 +5,8 @@ const verifyToken = (req, res, next) => {
 	if (req.headers.authorization) {
 		jwt.verify(req.headers.authorization, process.env.BCRYPT_SECRET, function (err, decode) {
 			if (err) {
-				res.send({message: 'Invalid User'})
 				req.user = undefined
+				next()
 				return
 			}
 			User.findOne({
@@ -14,21 +14,23 @@ const verifyToken = (req, res, next) => {
 				})
 				.exec((err, user) => {
 					if (err) {
-						res.status(500).send({
-							message: err
-						})
+						req.user = undefined
+						next()
+						return
 					} else {
 						req.user = user
+						next()
+						return
 					}
 				})
 		})
 	} else {
 		res.send({message: 'Invalid User'})
 		req.user = undefined
+		next()
 		return
 	}
-
-	next()
+	return
 }
 
 module.exports = verifyToken;

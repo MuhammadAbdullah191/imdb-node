@@ -1,5 +1,6 @@
 const Movie = require('../models/movie')
 const crud = require('../helpers/crud.helper')
+const { cloudinary } = require('../helpers/cloudinary')
 
 exports.listMovies = async (req,res) =>{
 	try{
@@ -12,6 +13,10 @@ exports.listMovies = async (req,res) =>{
 
 exports.createMovie = async(req,res) =>{
 	try{
+		const fileStr  = req.body.images
+		const uploadedResponse = await cloudinary.uploader.upload(fileStr,{upload_preset:'test'})
+		console.log(uploadedResponse)
+		req.body.images = [uploadedResponse.url]
 		const response = await crud.createResource(Movie, req)
 		res.status(200).send(response.message)
 	}catch(err){

@@ -24,6 +24,10 @@ const movieSchema = mongoose.Schema({
 		type: Number,
 		default: 0
 	},
+	images:{
+		type: [],
+		default: 0
+	},
 })
 
 module.exports = mongoose.model('Movie', movieSchema)
