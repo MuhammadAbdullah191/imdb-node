@@ -14,7 +14,6 @@ exports.listResources = (Model)=>{
 }
 
 exports.createResource = (Model,req) => {
-	console.log(req.body)
 	return new Promise((resolve, reject) => {
 		Model.findOne({title: req.body.title})
 		.exec((err,data)=>{

@@ -3,33 +3,50 @@ var bcrypt = require('bcrypt')
 var User = require('../models/user')
 
 exports.signup = (req, res) => {
-	const user = new User({
-		userName: req.body.userName,
-		email: req.body.email,
-		role: req.body.role,
-		password: bcrypt.hashSync(req.body.password, 8)
+	User.findOne({
+		email: req.body.email
 	})
-
-	user.save((err, user) => {
+	.exec((err, user) => {
 		if (err) {
-			res.status(500).send({
+			return res.status(422).send({
 				message: err
 			})
-		} else {
-			res.status(200).send({
-				messgae: 'User Registered Successfully'
+		}
+		if (user) {
+			return res.status(403).send({
+				message: 'User Already Exists'
 			})
 		}
+
+		const newUser = new User({
+			userName: req.body.userName,
+			email: req.body.email,
+			role: req.body.role,
+			password: bcrypt.hashSync(req.body.password, 8)
+		})
+		newUser.save((err, user) => {
+			if (err) {
+				res.status(422).send({
+					message: err
+				})
+			} else {
+				res.status(200).send({
+					messgae: 'User Registered Successfully'
+				})
+			}
+		})
 	})
+
 }
 
 exports.signin = (req, res) => {
+	console.log('I am here')
 	User.findOne({
 			email: req.body.email
 		})
 		.exec((err, user) => {
 			if (err) {
-				return res.status(500).send({
+				return res.status(422).send({
 					message: err
 				})
 			}
@@ -53,13 +70,13 @@ exports.signin = (req, res) => {
 				expiresIn: 1000
 			})
 
-			res.status(200).render('users/show',{
+			res.status(200).send({
 				user: {
 					id: user.id,
 					email: user.email,
 					userName: user.userName
 				},
-				messgae: 'Login Successful',
+				message: 'Login Successful',
 				accessToken: token,
 			})
 

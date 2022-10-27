@@ -4,6 +4,7 @@ const userController = require('../controllers/users.controller')
 let {signup, signin} = require('../controllers/auth.controller')
 const verifyToken = require('../middlewares/authJWT')
 
+router.get('/verifyToken',verifyToken, userController.verifyUser)
 router.post('/register', signup)
 router.post('/login', signin)
 

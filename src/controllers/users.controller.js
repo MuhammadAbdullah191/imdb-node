@@ -4,6 +4,10 @@ exports.testFunction = (req,res) =>{
 	res.send({message: "Post a new test message"})
 }
 
+exports.verifyUser = (req,res) =>{
+	res.send({user:req.user})
+}
+
 exports.findUser = (req,res) =>{
 	User.findById(req.params.userId)
 	.exec((err,user)=>{

@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const path = require('path');
+const cors = require('cors')
 const db = require('./src/config/DatabaseConfig')
 const userRouter = require('./src/routes/users')
 const movieRouter = require('./src/routes/movies') 
@@ -9,12 +10,18 @@ const reviewRouter = require('./src/routes/reviews')
 const celebrityRouter = require('./src/routes/celebrities')
 const watchListRouter = require('./src/routes/watchLists')
 const genreRouter = require('./src/routes/genre')
+const bodyParser = require('body-parser'); 
+
 
 app.use(express.urlencoded({extended: true}))
-app.use(express.json())
-app.set('views', path.join(__dirname, 'src', 'views'));
-app.set('view engine', 'ejs')
 
+// app.use(express.json())
+app.use(cors());
+app.set('views', path.join(__dirname, 'src', 'views'));
+app.set('view engine', 'ejs') 
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true, parameterLimit: 50000 }));
+app.use(express.json());
 app.use('/users', userRouter )
 app.use('/movies',movieRouter )
 app.use('/shows',showRouter)
