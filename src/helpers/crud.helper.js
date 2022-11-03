@@ -15,7 +15,16 @@ exports.listResources = (Model)=>{
 
 exports.createResource = (Model,req) => {
 	return new Promise((resolve, reject) => {
-		Model.findOne({title: req.body.title})
+		const modelName = Model.collection.collectionName
+		let findObj = {title: req.body.title}
+		if(modelName == 'reviews'){
+			findObj = {_id: null}
+		}
+		if(modelName == 'celebrities'){
+			findObj = {name:req.body.name}
+		}
+		
+		Model.findOne(findObj)
 		.exec((err,data)=>{
 		if(err){
 			return reject({message: 'Error while creating Movie'})
@@ -41,6 +50,20 @@ exports.createResource = (Model,req) => {
 exports.getResource = (Model, req) => {
 	return new Promise((resolve, reject) => {
 		Model.findById(req.params.id)
+		.exec((err,data)=>{
+		if(err){
+			return reject({messgae: 'Error while fetching Movie Please try again', err:err})
+		}
+		if(!data){
+			return resolve({message: 'Movie with this id does not exists', data: data})
+		}
+			return resolve({message: '', data: data})
+	})
+	})
+}
+exports.getAllReviews = (Model, req) => {
+	return new Promise((resolve, reject) => {
+		Model.find(req)
 		.exec((err,data)=>{
 		if(err){
 			return reject({messgae: 'Error while fetching Movie Please try again', err:err})
