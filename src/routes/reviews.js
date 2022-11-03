@@ -4,6 +4,7 @@ const reviewController = require('../controllers/reviews.controller')
 
 router.get('/', reviewController.listReviews)
 router.post('/', reviewController.createReview)
+router.get('/getAllReviews', reviewController.getAllReviews)
 router.get('/:id', reviewController.getReview)
 router.patch('/:id', reviewController.updateReview)
 router.delete('/:id', reviewController.deleteReview)

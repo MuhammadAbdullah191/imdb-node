@@ -13,10 +13,18 @@ exports.listMovies = async (req,res) =>{
 
 exports.createMovie = async(req,res) =>{
 	try{
-		const fileStr  = req.body.images
-		const uploadedResponse = await cloudinary.uploader.upload(fileStr,{upload_preset:'test'})
-		console.log(uploadedResponse)
-		req.body.images = [uploadedResponse.url]
+		console.log(req.body)
+		const fileStrs  = req.body.images
+		if (fileStrs){
+			let uploadedResponse;
+		for (const file of fileStrs) {
+			uploadedResponse = await cloudinary.uploader.upload(file,{upload_preset:'test'})
+			console.log(uploadedResponse)
+		}
+		}
+		
+		
+		// req.body.images = [uploadedResponse.url]
 		const response = await crud.createResource(Movie, req)
 		res.status(200).send(response.message)
 	}catch(err){
@@ -27,7 +35,6 @@ exports.createMovie = async(req,res) =>{
 exports.getMovie = async(req,res) =>{
 	try{
 		const response = await crud.getResource(Movie, req)
-		console.log(response)
 		res.status(200).send(response.data)
 	}catch(err){
 		res.status(404).send(err)

@@ -28,6 +28,17 @@ exports.getReview = async(req,res) =>{
 	}
 }
 
+exports.getAllReviews = async(req,res)=>{
+	try{
+		console.log("req.query")
+		console.log(req.query)
+		const response = await crud.getAllReviews(Review, req.query)
+		res.status(200).send(response)
+	}catch(err){
+		res.status(403).send(err)
+	}
+}
+
 exports.updateReview = async(req,res) =>{
 	try{
 		const response = await crud.updateResource(Review, req)
