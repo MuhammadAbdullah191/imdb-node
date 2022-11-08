@@ -12,7 +12,11 @@ const celebritySchema = mongoose.Schema({
 	type: {
 		type: String,
 		required: [true, 'Celebrity type is required']
-	}
+	},
+	images:{
+		type: [],
+		default: 0
+	},
 })
 
 module.exports = mongoose.model('Celebrity', celebritySchema)
