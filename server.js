@@ -11,6 +11,7 @@ const celebrityRouter = require('./src/routes/celebrities')
 const watchListRouter = require('./src/routes/watchLists')
 const genreRouter = require('./src/routes/genre')
 const mediaGenreRouter = require('./src/routes/mediaGenre')
+const mediaCelebrityRouter = require('./src/routes/mediaCelebrity')
 const bodyParser = require('body-parser'); 
 
 
@@ -31,6 +32,7 @@ app.use('/celebrities',celebrityRouter)
 app.use('/watchList',watchListRouter)
 app.use('/genre',genreRouter)
 app.use('/mediaGenre',mediaGenreRouter)
+app.use('/mediaCelebrity',mediaCelebrityRouter)
 
 app.get('/',(req,res)=>{
   res.status(200).render('index')

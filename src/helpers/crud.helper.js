@@ -16,12 +16,27 @@ exports.listResources = (Model)=>{
 exports.createResource = (Model,req) => {
 	return new Promise((resolve, reject) => {
 		const modelName = Model.collection.collectionName
+		console.log(modelName)
 		let findObj = {title: req.body.title}
 		if(modelName == 'reviews'){
 			findObj = {_id: null}
 		}
 		if(modelName == 'celebrities'){
 			findObj = {name:req.body.name}
+		}
+		if(modelName == 'mediagenres'){
+			findObj = {
+				"media_type": req.body.media_type,
+				"genre_id": req.body.genre_id,
+				"media": req.body.media
+			}
+		}
+		if (modelName == 'mediacelebrities'){
+			findObj = {
+				"media_type": req.body.media_type,
+				"celebrity_id": req.body.celebrity_id,
+				"media": req.body.media
+			}
 		}
 		
 		Model.findOne(findObj)
@@ -40,7 +55,7 @@ exports.createResource = (Model,req) => {
 				return reject({message: 'Error while creating Movie', err:err})
 			}
 			else{
-				return resolve({message: 'Movie Created Successfully'})
+				return resolve({data: movie,message: 'Movie Created Successfully'})
 			}
 		})
 	})

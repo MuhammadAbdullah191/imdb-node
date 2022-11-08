@@ -12,7 +12,7 @@ const mediaGenreSchema = mongoose.Schema({
 	},
 	genre_id: {
 		type: mongoose.Schema.ObjectId,
-		refPath: 'Genre'
+		ref: 'Genre'
 	},
 })
 
