@@ -4,6 +4,7 @@ const { cloudinary } = require('../helpers/cloudinary')
 const mediaGenre = require('./mediaGnere.controller')
 const mediaCelebrity = require('./mediaCelebrity.controller')
 
+
 exports.listMovies = async (req,res) =>{
 	try{
 		const response = await crud.listResources(Movie)
@@ -34,6 +35,7 @@ exports.createMovie = async(req,res) =>{
 			const genreResponse = await mediaGenre.createMediaGenres({genres:req.body.genre, "media":response.data.id, "media_type":'Show'})
 			console.log(genreResponse)
 			const celebrityResponse = await mediaCelebrity.createMediaCelebrities({celebrities:req.body.celebrities, "media":response.data.id, "media_type":'Movie'})
+			console.log(celebrityResponse)
 		}
 		res.status(200).send(response.message)
 	}catch(err){

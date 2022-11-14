@@ -16,7 +16,6 @@ exports.listResources = (Model)=>{
 exports.createResource = (Model,req) => {
 	return new Promise((resolve, reject) => {
 		const modelName = Model.collection.collectionName
-		console.log(modelName)
 		let findObj = {title: req.body.title}
 		if(modelName == 'reviews'){
 			findObj = {_id: null}
@@ -42,7 +41,7 @@ exports.createResource = (Model,req) => {
 		Model.findOne(findObj)
 		.exec((err,data)=>{
 		if(err){
-			return reject({message: 'Error while creating Movie'})
+			return reject({message: err})
 		}
 		if(data){
 			return resolve({message: 'Movie Name already exists'})
@@ -52,7 +51,7 @@ exports.createResource = (Model,req) => {
 
 		movie.save((err,movie) =>{
 			if(err){
-				return reject({message: 'Error while creating Movie', err:err})
+				return reject({message: err, err:err})
 			}
 			else{
 				return resolve({data: movie,message: 'Movie Created Successfully'})

@@ -3,6 +3,7 @@ const router = express.Router()
 const mediaCelebrityController = require('../controllers/mediaCelebrity.controller')
 
 router.get('/', mediaCelebrityController.listMediaCelebrity)
+router.get('/:id/getAllCelebrities', mediaCelebrityController.getAllCelebrities)
 router.post('/', mediaCelebrityController.createMediaCelebrity)
 router.get('/:id', mediaCelebrityController.getMediaCelebrity)
 router.patch('/:id', mediaCelebrityController.updateMediaCelebrity)
