@@ -15,11 +15,8 @@ exports.listShows = async(req,res) =>{
 
 exports.createShow = async(req,res) =>{
 	try{
-		console.log("req.body.celebrities")
-		console.log(req.body.celebrities)
-		// res.status(200).send("response.message")
-
-		// return
+		console.log("req.body")
+		console.log(req.body)
 		if(req.body.images){
 			const fileStrs  = req.body.images
 			req.body.images=[]

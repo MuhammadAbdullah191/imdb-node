@@ -28,10 +28,28 @@ exports.getReview = async(req,res) =>{
 	}
 }
 
+exports.getSpecificReview = async(req,res) =>{
+	console.log("req.params")
+	console.log(req.query)
+	try{
+		Review.findOne(req.query)
+		.exec((err,data)=>{
+			console.log(data)
+		if(err){
+			return res.send({messgae: 'Error while fetching Movie Please try again', err:err})
+		}
+		if(!data){
+			return res.send({message: 'Movie with this id does not exists', data: data})
+		}
+			return res.send({message: '', data: data})
+	})
+	}catch(err){
+		res.status(404).send(err)
+	}
+}
+
 exports.getAllReviews = async(req,res)=>{
 	try{
-		console.log("req.query")
-		console.log(req.query)
 		const response = await crud.getAllReviews(Review, req.query)
 		res.status(200).send(response)
 	}catch(err){
