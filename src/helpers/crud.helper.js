@@ -16,6 +16,8 @@ exports.listResources = (Model)=>{
 exports.createResource = (Model,req) => {
 	return new Promise((resolve, reject) => {
 		const modelName = Model.collection.collectionName
+		console.log("modelName")
+		console.log(modelName)
 		let findObj = {title: req.body.title}
 		if(modelName == 'reviews'){
 			findObj = {_id: null}
@@ -34,6 +36,13 @@ exports.createResource = (Model,req) => {
 			findObj = {
 				"media_type": req.body.media_type,
 				"celebrity_id": req.body.celebrity_id,
+				"media": req.body.media
+			}
+		}
+		if(modelName=='watchlists'){
+			findObj = {
+				"media_type": req.body.media_type,
+				"user": req.body.user,
 				"media": req.body.media
 			}
 		}
@@ -92,7 +101,7 @@ exports.getAllReviews = (Model, req) => {
 
 exports.updateResource = (Model, req) => {
 	return new Promise((resolve,reject) => {
-		Model.findByIdAndUpdate(req.params.id, {title:'testing update'},{new: true})
+		Model.findByIdAndUpdate(req.params.id, req.body,{new: true})
 		.exec((err,data)=>{
 		if(err){
 			return reject({message: 'Unable to update movies', data: data})

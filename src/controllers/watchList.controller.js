@@ -45,3 +45,24 @@ exports.deleteWatchList = async(req,res) =>{
 		res.status(404).send(err)
 	}
 }
+
+exports.checkWatchList = (req,res) => {
+	try{
+		console.log("finding obj")
+	const findObj = {
+		"media_type": req.body.media_type,
+		"user": req.body.user,
+		"media": req.body.media
+	}
+	console.log("finding obj")
+	WatchList.findOne(findObj)
+		.exec((err,data)=>{
+			console.log("watchlist")
+			console.log(data)
+			res.send(data)
+		})
+	}catch(err){
+		res.send('getting error')
+	}
+	
+}
