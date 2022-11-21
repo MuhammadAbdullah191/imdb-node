@@ -5,7 +5,8 @@ const reviewSchema = mongoose.Schema({
 		type: String
 	},
 	rating: {
-		type: Number
+		type: Number,
+		default:-1
 	},
 	media_type: {
 		type: String,
