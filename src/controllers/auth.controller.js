@@ -40,7 +40,6 @@ exports.signup = (req, res) => {
 }
 
 exports.signin = (req, res) => {
-	console.log('I am here')
 	User.findOne({
 			email: req.body.email
 		})

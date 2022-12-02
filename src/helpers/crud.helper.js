@@ -16,8 +16,6 @@ exports.listResources = (Model)=>{
 exports.createResource = (Model,req) => {
 	return new Promise((resolve, reject) => {
 		const modelName = Model.collection.collectionName
-		console.log("modelName")
-		console.log(modelName)
 		let findObj = {title: req.body.title}
 		if(modelName == 'reviews'){
 			findObj = {_id: null}
@@ -115,6 +113,26 @@ exports.updateResource = (Model, req) => {
 exports.deleteResource = (Model, req) => {
 	return new Promise((resolve,reject) => {
 		Model.findByIdAndRemove(req.params.id)
+		.exec((err,data)=>{
+		if(err){
+			return reject({message: 'Unable to delete movies', data: data})
+		}else{
+			return resolve({message:'Movie Deleted Successfully', data:data})
+		}
+	})
+	})
+}
+
+exports.findByName = (Model, req) => {
+	return new Promise((resolve,reject) => {
+		let str = req.query.key
+		var regex = new RegExp(".*" + str + ".*", "i");
+		let findObj = {"title" : regex}
+		const modelName = Model.collection.collectionName
+		if(modelName == 'celebrities'){
+			findObj = {"name":regex}
+		}
+		Model.find(findObj)
 		.exec((err,data)=>{
 		if(err){
 			return reject({message: 'Unable to delete movies', data: data})

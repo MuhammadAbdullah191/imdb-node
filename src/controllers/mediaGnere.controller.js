@@ -33,7 +33,6 @@ exports.getAllGenre = async(req,res) =>{
 	return new Promise((resolve, reject) => {
 	MediaGenreModel.find({'media':req.params.id}).populate('genre_id')
 		.exec((err,data)=>{
-			console.log(data)
 		if(err){
 			return reject({messgae: 'Error while fetching Movie Please try again', err:err})
 		}
@@ -47,7 +46,6 @@ exports.getAllGenre = async(req,res) =>{
 
 exports.createMediaGenres = async(genreData) =>{
 	const genreIds = genreData.genres
-	// console.log(Array.isArray(genreIds))
 	for (let i = 0; i < genreIds.length; i++) {
 		let data =  {
 			body:{
@@ -57,23 +55,11 @@ exports.createMediaGenres = async(genreData) =>{
 			}
 		}
 		let response = await crud.createResource(MediaGenre, data)
-		console.log(response)
 	}
 	
 	return 'done'
 
 }
-
-// exports.getAllMediaGenres = async(req,res)=>{
-// 	try{
-// 		console.log("req.query")
-// 		console.log(req.query)
-// 		const response = await crud.getAllMediaGenres(MediaGenre, req.query)
-// 		res.status(200).send(response)
-// 	}catch(err){
-// 		res.status(403).send(err)
-// 	}
-// }
 
 exports.updateMediaGenre = async(req,res) =>{
 	try{

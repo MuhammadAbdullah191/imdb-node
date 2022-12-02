@@ -20,7 +20,6 @@ exports.createCelebrity = async(req,res) =>{
 				let uploadedResponse;
 			for (const file of fileStrs) {
 				uploadedResponse = await cloudinary.uploader.upload(file,{upload_preset:'test'})
-				console.log(uploadedResponse)
 				req.body.images.push(uploadedResponse.url)
 			}
 			
@@ -55,6 +54,15 @@ exports.updateCelebrity = async(req,res) =>{
 exports.deleteCelebrity = async(req,res) =>{
 	try{
 		const response = await crud.deleteResource(Celebrity, req)
+		res.status(200).send(response.data)
+	}catch(err){
+		res.status(404).send(err)
+	}
+}
+
+exports.findByName = async(req,res) =>{
+	try{
+		const response = await crud.findByName(Celebrity, req)
 		res.status(200).send(response.data)
 	}catch(err){
 		res.status(404).send(err)

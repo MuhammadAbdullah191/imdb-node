@@ -15,8 +15,6 @@ exports.listShows = async(req,res) =>{
 
 exports.createShow = async(req,res) =>{
 	try{
-		console.log("req.body")
-		console.log(req.body)
 		if(req.body.images){
 			const fileStrs  = req.body.images
 			req.body.images=[]
@@ -24,7 +22,6 @@ exports.createShow = async(req,res) =>{
 				let uploadedResponse;
 				for (const file of fileStrs) {
 					uploadedResponse = await cloudinary.uploader.upload(file,{upload_preset:'test'})
-					console.log(uploadedResponse)
 					req.body.images.push(uploadedResponse.url)
 				}
 			}
@@ -32,11 +29,8 @@ exports.createShow = async(req,res) =>{
 		
 		const response = await crud.createResource(Show, req)
 		if(response.data){
-			console.log('generating genre')
 			const genreResponse = await mediaGenre.createMediaGenres({genres:req.body.genre, "media":response.data.id, "media_type":'Show'})
-			console.log(genreResponse)
 			const celebrityResponse = await mediaCelebrity.createMediaCelebrities({celebrities:req.body.celebrities, "media":response.data.id, "media_type":'Show'})
-			console.log(celebrityResponse)
 		}
 		
 		res.status(200).send(response.message)
@@ -67,6 +61,15 @@ exports.updateShow = async(req,res) =>{
 exports.deleteShow = async(req,res) =>{
 	try{
 		const response = await crud.deleteResource(Show, req)
+		res.status(200).send(response.data)
+	}catch(err){
+		res.status(404).send(err)
+	}
+}
+
+exports.findByName = async(req,res) =>{
+	try{
+		const response = await crud.findByName(Show, req)
 		res.status(200).send(response.data)
 	}catch(err){
 		res.status(404).send(err)

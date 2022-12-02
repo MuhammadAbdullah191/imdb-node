@@ -29,11 +29,8 @@ exports.getMediaCelebrity = async(req,res) =>{
 }
 
 exports.getAllCelebrities = (req,res) =>{
-	console.log(req.params)
 	MediaCelebrity.find({'media':req.params.id}).populate('celebrity_id')
 		.exec((err,data)=>{
-			console.log("data")
-			console.log(data)
 		if(err){
 			return res.send({messgae: 'Errors while fetching Movie Please try again', err:err})
 		}
@@ -45,12 +42,8 @@ exports.getAllCelebrities = (req,res) =>{
 }
 
 exports.createMediaCelebrities = async(CelebritiesData) =>{
-	console.log("CelebritiesData")
-	console.log(CelebritiesData)
-	console.log("CelebritiesData length")
 	const celebrities = CelebritiesData.celebrities
 	for (const key in celebrities)  {
-		console.log(celebrities[key].role_name)
 		let data =  {
 			body:{
 				"media_type": CelebritiesData.media_type,
@@ -62,32 +55,10 @@ exports.createMediaCelebrities = async(CelebritiesData) =>{
 		}
 		try{
 			let response = await crud.createResource(MediaCelebrity, data)
-			console.log('response')
-			console.log(response)
 		}catch(e){
 			console.log(e)
 		}
 	}
-	// for (let i = 0; i < celebrities.length; i++) {
-	// 	let data =  {
-	// 		body:{
-	// 			"media_type": CelebritiesData.media_type,
-	// 			"celebrity_id": celebrities[i].value,
-	// 			"media": CelebritiesData.media,
-	// 			"role_name": 'Rony Stark',
-	// 			"role_type":'Star'
-	// 		}
-	// 	}
-	// 	console.log('I am here')
-	// 	try{
-	// 		let response = await crud.createResource(MediaCelebrity, data)
-	// 		console.log('response')
-	// 		console.log(response)
-	// 	}catch(e){
-	// 		console.log(e)
-	// 	}
-		
-	// }
 	
 	return 'done'
 

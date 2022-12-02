@@ -3,6 +3,7 @@ const router = express.Router()
 const showController = require('../controllers/shows.controller')
 
 router.get('/', showController.listShows)
+router.get('/find', showController.findByName)
 router.post('/', showController.createShow)
 router.get('/:id', showController.getShow)
 router.patch('/:id', showController.updateShow)

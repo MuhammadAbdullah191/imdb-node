@@ -29,12 +29,9 @@ exports.getReview = async(req,res) =>{
 }
 
 exports.getSpecificReview = async(req,res) =>{
-	console.log("req.params")
-	console.log(req.query)
 	try{
 		Review.findOne(req.query)
 		.exec((err,data)=>{
-			console.log(data)
 		if(err){
 			return res.send({messgae: 'Error while fetching Movie Please try again', err:err})
 		}
@@ -51,22 +48,41 @@ exports.getSpecificReview = async(req,res) =>{
 exports.getAllReviews = async(req,res)=>{
 	try{
 		const response = await crud.getAllReviews(Review, req.query)
+		let rating = pluckRating(response.data,'rating')
+		response.rating = rating
+		console.log(response)
 		res.status(200).send(response)
 	}catch(err){
+		console.log(err)
 		res.status(403).send(err)
 	}
+}
+exports.getRating = async(req,res)=>{
+	try{
+		const response = await crud.getAllReviews(Review, req.query)
+		let rating = pluckRating(response.data,'rating')
+		console.log('rating are')
+		console.log(rating)
+		res.status(200).send({"rating":rating})
+	}catch(err){
+		res.status(404).send(err)
+	}
+}
+const pluckRating = (array, key) => {
+	let sum =  0
+	let count = 0
+	array.forEach((o) => {
+		if(o[key]>=0){
+			sum = sum + o[key]
+			count++
+		}
+	});
+	return sum/count
 }
 
 exports.updateReview = async(req,res) =>{
 	try{
-		console.log('req.body')
-		console.log(req.body)
-		console.log(req.params)
-		// res.status(200).send("response.data")
-		// return
 		const response = await crud.updateResource(Review, req)
-		console.log("response")
-		console.log(response)
 		res.status(200).send(response.data)
 	}catch(err){
 		res.status(404).send(err)

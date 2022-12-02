@@ -13,7 +13,7 @@ exports.listWatchLists = async (req,res) =>{
 exports.createWatchList = async(req,res) =>{
 	try{
 		const response = await crud.createResource(WatchList, req)
-		res.status(200).send(response.message)
+		res.status(200).send(response)
 	}catch(err){
 		res.status(404).send(err)
 	}
@@ -48,17 +48,28 @@ exports.deleteWatchList = async(req,res) =>{
 
 exports.checkWatchList = (req,res) => {
 	try{
-		console.log("finding obj")
 	const findObj = {
 		"media_type": req.body.media_type,
 		"user": req.body.user,
 		"media": req.body.media
 	}
-	console.log("finding obj")
 	WatchList.findOne(findObj)
 		.exec((err,data)=>{
-			console.log("watchlist")
-			console.log(data)
+			res.send(data)
+		})
+	}catch(err){
+		res.send('getting error')
+	}
+	
+}
+
+exports.getUserWatchlist = (req,res) => {
+	try{
+	const findObj = {
+		"user": req.params.id
+	}
+	WatchList.find(findObj).populate('media')
+		.exec((err,data)=>{
 			res.send(data)
 		})
 	}catch(err){
