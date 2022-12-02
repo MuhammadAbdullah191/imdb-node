@@ -35,7 +35,7 @@ app.use('/mediaGenre',mediaGenreRouter)
 app.use('/mediaCelebrity',mediaCelebrityRouter)
 
 app.get('/',(req,res)=>{
-  res.status(200).render('index')
+  res.status(200).send('Welcome to server')
 })
 
 app.use("/public", express.static('public'))
