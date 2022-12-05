@@ -14,12 +14,12 @@ exports.listShows = async(req,res) =>{
 }
 
 exports.createShow = async(req,res) =>{
+	let uploadedResponse;
 	try{
 		if(req.body.images){
 			const fileStrs  = req.body.images
 			req.body.images=[]
 			if (fileStrs){
-				let uploadedResponse;
 				for (const file of fileStrs) {
 					uploadedResponse = await cloudinary.uploader.upload(file,{upload_preset:'test'})
 					req.body.images.push(uploadedResponse.url)
