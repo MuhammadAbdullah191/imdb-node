@@ -14,6 +14,8 @@ exports.listShows = async(req,res) =>{
 }
 
 exports.createShow = async(req,res) =>{
+	console.log('uploading images')
+		console.log(req.body.images)
 	let uploadedResponse;
 	try{
 		if(req.body.images){
