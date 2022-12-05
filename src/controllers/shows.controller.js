@@ -30,6 +30,8 @@ exports.createShow = async(req,res) =>{
 		console.log(uploadedResponse)
 		
 		const response = await crud.createResource(Show, req)
+		console.log('uploading response')
+		console.log(response)
 		if(response.data){
 			const genreResponse = await mediaGenre.createMediaGenres({genres:req.body.genre, "media":response.data.id, "media_type":'Show'})
 			const celebrityResponse = await mediaCelebrity.createMediaCelebrities({celebrities:req.body.celebrities, "media":response.data.id, "media_type":'Show'})
