@@ -13,12 +13,12 @@ const genreRouter = require('./src/routes/genre')
 const mediaGenreRouter = require('./src/routes/mediaGenre')
 const mediaCelebrityRouter = require('./src/routes/mediaCelebrity')
 const bodyParser = require('body-parser'); 
-
+// add cors
 
 app.use(express.urlencoded({extended: true}))
 
 // app.use(express.json())
-app.use(cors());
+app.use(cors({ origin: true }));
 app.set('views', path.join(__dirname, 'src', 'views'));
 app.set('view engine', 'ejs') 
 app.use(bodyParser.json({ limit: '50mb' }));
