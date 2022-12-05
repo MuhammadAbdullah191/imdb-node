@@ -21,7 +21,7 @@ exports.createShow = async(req,res) =>{
 			// req.body.images=[]
 			if (fileStrs){
 				for (const file of fileStrs) {
-					uploadedResponse = await cloudinary.uploader.upload(file)
+					uploadedResponse = await cloudinary.uploader.upload(file,{upload_preset:'Cloudinary'})
 					// req.body.images.push(uploadedResponse.url)
 				}
 			}
