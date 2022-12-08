@@ -4,6 +4,9 @@ const { cloudinary } = require('../helpers/cloudinary')
 const mediaGenre = require('./mediaGnere.controller')
 const mediaCelebrity = require('./mediaCelebrity.controller')
 
+
+ 
+
 exports.listShows = async(req,res) =>{
 	try{
 		const response = await crud.listResources(Show)
