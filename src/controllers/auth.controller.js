@@ -70,11 +70,7 @@ exports.signin = (req, res) => {
 			})
 
 			res.status(200).send({
-				user: {
-					id: user.id,
-					email: user.email,
-					userName: user.userName
-				},
+				user: user,
 				message: 'Login Successful',
 				accessToken: token,
 			})
