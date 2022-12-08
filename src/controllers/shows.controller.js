@@ -20,16 +20,14 @@ exports.createShow = async(req,res) =>{
 	try{
 		if(req.body.images){
 			const fileStrs  = req.body.images
-			// req.body.images=[]
+			req.body.images=[]
 			if (fileStrs){
 				for (const file of fileStrs) {
 					uploadedResponse = await cloudinary.uploader.upload(file,{upload_preset:'Cloudinary'})
-					// req.body.images.push(uploadedResponse.url)
+					req.body.images.push(uploadedResponse.url)
 				}
 			}
 		}
-		console.log('uploading response')
-		console.log(uploadedResponse)
 		
 		const response = await crud.createResource(Show, req)
 		console.log('uploading response')

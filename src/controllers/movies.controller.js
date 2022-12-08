@@ -16,15 +16,18 @@ exports.listMovies = async (req,res) =>{
 
 exports.createMovie = async(req,res) =>{
 	try{
-		const fileStrs  = req.body.images
-		if (fileStrs){
-			let uploadedResponse;
-		for (const file of fileStrs) {
-			uploadedResponse = await cloudinary.uploader.upload(file,{upload_preset:'test'})
+		if(req.body.images){
+			const fileStrs  = req.body.images
+			req.body.images=[]
+			if (fileStrs){
+				let uploadedResponse;
+			for (const file of fileStrs) {
+				uploadedResponse = await cloudinary.uploader.upload(file,{upload_preset:'test'})
+				req.body.images.push(uploadedResponse.url)
+			}
+			
+			}
 		}
-		}
-		
-		// req.body.images = [uploadedResponse.url]
 		const response = await crud.createResource(Movie, req)
 		if(response.data){
 			const genreResponse = await mediaGenre.createMediaGenres({genres:req.body.genre, "media":response.data.id, "media_type":'Show'})
