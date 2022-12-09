@@ -66,7 +66,7 @@ exports.signin = (req, res) => {
 			var token = jwt.sign({
 				id:user.id
 			},process.env.BCRYPT_SECRET,{
-				expiresIn: 1000
+				expiresIn: 100000
 			})
 
 			res.status(200).send({
